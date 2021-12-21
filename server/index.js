@@ -4,11 +4,7 @@ const cors = require('cors');
 const CronJob = require('cron').CronJob;
 
 const app = express();
-app.use(
-    cors({
-        origin: 'http://localhost:2294',
-    })
-);
+app.use(cors({}));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,9 +20,9 @@ app.post('/upload', loadingByChunks);
 
 app.use('/files', express.static('files')); //
 
-//cron job 
+//cron job
 const job = new CronJob(
-    '* 1 * * * *', //every hour 
+    '* 1 * * * *', //every hour
     function () {
         console.log('---------------');
         console.log(fileStorage);
@@ -34,7 +30,7 @@ const job = new CronJob(
         for (const fileId in fileStorage) {
             const currentTimestamp = Math.ceil(new Date().getTime() / 1000);
             const diffTime = Math.abs(currentTimestamp - fileStorage[fileId].handleLastChunk);
-            const hour = 60;
+            const hour = 3600;
 
             if (diffTime >= hour) {
                 delete fileStorage[fileId];
