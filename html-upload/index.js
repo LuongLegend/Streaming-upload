@@ -10,8 +10,8 @@
 
         fileInput.setAttribute('disabled', 'disabled');
         uploadButton.setAttribute('disabled', 'disabled');
-        uploadTime.innerText = '';
-        progress.innerText = '';
+        uploadTime.textContent = '';
+        progress.textContent = '';
 
         const file = fileInput.files[0];
         if (!file) {
@@ -26,14 +26,14 @@
             .send(file)
             .onProgress(({ loaded, total }) => {
                 const percent = Math.round((loaded / total) * 100);
-                progress.innerText = `${percent}%`;
+                progress.textContent = `${percent}%`;
                 
                 if (loaded === total) {
                     const timeSpent = endTimer();
                     alert('Completed upload!');
                     fileInput.removeAttribute('disabled');
                     uploadButton.removeAttribute('disabled');
-                    uploadTime.innerText = `(${timeSpent / 1000} sec)`;
+                    uploadTime.textContent = `(${timeSpent / 1000} sec)`;
                 }
             })
             .upload();

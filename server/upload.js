@@ -22,7 +22,6 @@ class UploadedFile {
 
     pushChunk(id, chunk, contentLength) {
         const completeChunk = Buffer.concat(chunk);
-        console.log([completeChunk.length, contentLength]);
         if (completeChunk.length !== Number(contentLength)) {
             return false;
         }
@@ -43,7 +42,7 @@ class UploadedFile {
 }
 
 function initUploading(request, response) {
-    console.log(request.body);
+    //console.log(request.body);
     const { name: fileName, size: fileSize, chunksQuantity } = request.body;
     if (!fileName || typeof fileSize === 'undefined' || typeof chunksQuantity === 'undefined') {
         return response.sendStatus(400);
